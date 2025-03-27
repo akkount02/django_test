@@ -15,8 +15,17 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
+import shared.drf_yasg as drf
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path("api/", include("api.urls"))
 ]
+
+swagger = [
+    path('swagger/', drf.schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
+    path('redoc/', drf.schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
+]
+
+urlpatterns += swagger
